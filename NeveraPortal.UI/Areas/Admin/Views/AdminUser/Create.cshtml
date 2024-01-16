@@ -1,0 +1,37 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+@model NeveraPortal.UI.Areas.Admin.Models.AdminUser.CreateAdminUserVM
+
+<h1>Create</h1>
+
+<hr />
+
+<form action="/admin/adminuser/create" method="post">
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <div class="form-group">
+
+        <label class="control-label">EMail</label>
+        @Html.TextBoxFor(m => m.EMail, new { @class = "form-control" })
+
+    </div>
+
+    <div class="form-group">
+
+        <label class="control-label">Password</label>
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+
+    </div>
+
+    <div class="form-group">
+
+        <label class="control-label">ConfirmPassword</label>
+        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+
+</form>
