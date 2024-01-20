@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+@model NeveraPortal.UI.Areas.Admin.Models.AdminUser.EditAdminUserVM
+
+@* <h1>Update</h1>
+
+<hr />
+
+<form action="/admin/adminuser" method="post">
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <div class="form-group">
+
+        <label class="control-label">Id</label>
+        @Html.LabelFor(m => m.Id, new { @class = "form-control" })
+
+    </div>    
+    
+    <div class="form-group">
+
+        <label class="control-label">EMail</label>
+        @Html.TextBoxFor(m => m.EMail, new { @class = "form-control" })
+
+    </div>
+
+    <div class="form-group">
+
+        <label class="control-label">Password</label>
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+
+    </div>
+
+    <div class="form-group">
+
+        <label class="control-label">ConfirmPassword</label>
+        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+
+</form> *@
+<h1>Edit User</h1>
+
+@using (Html.BeginForm("SaveUpdate", "AdminUser")) // Update işlemini kaydedecek bir eylem eklemeyi unutmayın
+{
+    @Html.AntiForgeryToken()
+
+    <!-- Form alanları -->
+    <div>
+        <label asp-for="EMail">Email:</label>
+        <input asp-for="EMail" />
+    </div>
+
+    <!-- Diğer form alanları eklenebilir -->
+
+    <button type="submit">Save</button>
+}
