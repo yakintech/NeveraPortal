@@ -52,9 +52,23 @@ namespace NeveraPortal.UI.Areas.Admin.Controllers
             
         }
 
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
-            return View();
+            AdminUser user = _adminUserRepository.GetById(id);
+
+            if (user == null)
+            {
+                return NotFound(); // Or handle the case where the user is not found
+            }
+
+            EditAdminUserVM model = new EditAdminUserVM
+            {
+                Id = user.Id,
+                EMail = user.EMail,
+                // Set other properties as needed
+            };
+
+            return View(model);
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -62,20 +76,56 @@ namespace NeveraPortal.UI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                return View();
+                try
+                {
+                    // Fetch the user from the repository
+                    AdminUser userToUpdate = _adminUserRepository.GetById(model.Id);
+
+                    if (userToUpdate == null)
+                    {
+                        return NotFound(); // Or handle the case where the user is not found
+                    }
+
+                    // Update user properties with values from the view model
+                    userToUpdate.EMail = model.EMail;
+                    // Update other properties as needed
+
+                    // Save changes to the repository
+                    _adminUserRepository.Update(userToUpdate);
+
+                    return RedirectToAction(nameof(Index), new { area = "Admin" });
+                }
+                catch (Exception ex)
+                {
+                    // Handle the exception (log it, display an error message, etc.)
+                    return View("Error"); // You can create an error view to display a user-friendly error message
+                }
             }
             else
             {
                 return View(model);
             }
-            
         }
+
 
 
         public IActionResult Delete(int id)
-        {
-            return RedirectToAction(nameof(Index));
-        }
+		{
+			// Fetch the user details based on the provided id
+			AdminUser user = _adminUserRepository.GetById(id);
 
-    }
+			if (user == null)
+			{
+				return NotFound(); // Or handle the case where the user is not found
+			}
+
+			// You may want to show a confirmation page or directly delete the user
+			_adminUserRepository.Delete(id);
+
+			return RedirectToAction(nameof(Index), new { area = "Admin" }); // Specify the area
+		}
+
+
+
+	}
 }

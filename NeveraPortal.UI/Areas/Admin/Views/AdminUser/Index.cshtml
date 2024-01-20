@@ -1,6 +1,6 @@
 ﻿@using NonFactors.Mvc.Grid;
 @{
-    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+	Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
 }
 
 @model List<NeveraPortal.UI.Areas.Admin.Models.AdminUser.IndexAdminUserVM>
@@ -8,20 +8,23 @@
 <h1>Admin List</h1>
 <form action="/admin/adminuser" method="post">
 
-@Html.AntiForgeryToken()
-@(Html
-    .Grid(Model)
-    .Build(columns =>
-    {
-        //columns.Add().RenderedAs((model, row) => row + 1).Titled("#").Css("text-center");
-        
-        columns.Add(model => model.Id).Titled("Id");
-        columns.Add(model => model.EMail).Titled("EMail");
-        columns.Add(model => $"<button data-id=\"{model.Id}\">Update</button>").Encoded(false);
-        columns.Add(model => $"<button data-id=\"{model.Id}\">Delete</button>").Encoded(false);
+	@Html.AntiForgeryToken()
+	@(Html
+		.Grid(Model)
+		.Build(columns =>
+		{
+			//columns.Add().RenderedAs((model, row) => row + 1).Titled("#").Css("text-center");
 
-        
-    })
-)
+			columns.Add(model => model.Id).Titled("Id");
+			columns.Add(model => model.EMail).Titled("EMail");
+			columns.Add(model => $"<a href=\"/admin/adminuser/edit/{model.Id}\">Update</a>").Encoded(false);
+			columns.Add(model => $"<a href=\"/admin/adminuser/delete/{model.Id}\">Delete</a>").Encoded(false);
+
+
+
+		})
+		)
+
+	<a href="/admin/adminuser/create" class="btn btn-primary">Create</a>
 
 </form>

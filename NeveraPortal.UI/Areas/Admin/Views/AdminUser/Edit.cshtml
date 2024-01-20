@@ -1,0 +1,28 @@
+﻿@model NeveraPortal.UI.Areas.Admin.Models.AdminUser.EditAdminUserVM
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<h1>Edit User</h1>
+
+<form asp-action="Edit" asp-controller="AdminUser" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label>EMail</label>
+        <label asp-for="EMail"></label>
+        <input asp-for="EMail" class="form-control" />
+        <span asp-validation-for="EMail" class="text-danger"></span>
+    </div>
+
+    <!-- Add other form fields for Password, ConfirmPassword, etc. -->
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-secondary" onclick="window.history.back();">Cancel</button>
+    </div>
+</form>

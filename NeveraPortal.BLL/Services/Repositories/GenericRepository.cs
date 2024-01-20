@@ -83,5 +83,13 @@ namespace NeveraPortal.BLL.Services.Repositories
 
             return entity;
         }
+        public void Update(T entity)
+        {
+            context.Entry(entity).State = EntityState.Modified;
+            context.SaveChanges();
+        }
+
+
     }
 }
+

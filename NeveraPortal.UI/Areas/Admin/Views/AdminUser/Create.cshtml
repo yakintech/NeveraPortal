@@ -8,30 +8,42 @@
 
 <hr />
 
-<form action="/admin/adminuser/create" method="post">
+<form action="/admin/adminuser/create" method="post" id="createForm">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
-    <div class="form-group">
 
+    <div class="form-group">
         <label class="control-label">EMail</label>
         @Html.TextBoxFor(m => m.EMail, new { @class = "form-control" })
-
     </div>
 
     <div class="form-group">
-
         <label class="control-label">Password</label>
         @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-
     </div>
 
     <div class="form-group">
-
         <label class="control-label">ConfirmPassword</label>
         @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-
     </div>
 
     <button type="submit" class="btn btn-primary">Create</button>
-
+    <button type="button" class="btn btn-secondary" onclick="cancel()">Cancel</button>
 </form>
+
+<script>
+    function cancel() {
+        // Use JavaScript to navigate back
+        history.back();
+    }
+</script>

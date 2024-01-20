@@ -25,5 +25,6 @@ namespace NeveraPortal.BLL.Services.Interfaces
         IQueryable<T> GetAllWithExternalQuery(Expression<Func<T, bool>> filter);
 
         T Delete(int id);
+        void Update(T entity);
     }
 }

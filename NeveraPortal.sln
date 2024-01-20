@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeveraPortal.DAL", "NeveraPortal.DAL\NeveraPortal.DAL.csproj", "{71DA2081-1AA4-41E6-A82B-1BC8B430D0F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeveraPortal.DAL", "NeveraPortal.DAL\NeveraPortal.DAL.csproj", "{71DA2081-1AA4-41E6-A82B-1BC8B430D0F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeveraPortal.BLL", "NeveraPortal.BLL\NeveraPortal.BLL.csproj", "{4937BA5A-2AD1-47CA-9F63-BF2938E41D5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeveraPortal.BLL", "NeveraPortal.BLL\NeveraPortal.BLL.csproj", "{4937BA5A-2AD1-47CA-9F63-BF2938E41D5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeveraPortal.UI", "NeveraPortal.UI\NeveraPortal.UI.csproj", "{20FEA43D-36F3-4C42-BDE7-EDA05BC36E34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NeveraPortal.UI", "NeveraPortal.UI\NeveraPortal.UI.csproj", "{20FEA43D-36F3-4C42-BDE7-EDA05BC36E34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
