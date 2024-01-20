@@ -1,0 +1,62 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+@model CreateBlogVM
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+<a class="btn btn-success mb-3" href="/admin/blog/index">Go Back to Blogs Home Hape</a>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Error
+    </div>
+}
+
+@if(ViewBag.Result != null)
+{
+    <div class="alert alert-info" role="alert">
+        @ViewBag.Result
+    </div>
+}
+
+
+<form href="/Admin/Blog/Create" method="post"
+      enctype="multipart/form-data">
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" placeholder="enter blog title here.." />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label for="MainImage" class="form-label"></label>
+        <input asp-for="MainImage" class="form-control" type="file" id="formFile">
+        <span asp-validation-for="MainImage" class="text-danger"></span>
+    </div>
+    
+
+    <div class="mb-3">
+    <h3>Content</h3>
+    <textarea asp-for="Content" id="editor">@Model.Content</textarea>
+    <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+    <input class="btn btn-success" type="submit" value="Add Blog">
+</form>
+
+
+
+<div class="text-center">
+</div>
+
+
+
+<script src="~/admin/vendor/ckeditor5/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .catch(error => {
+            console.error(error);
+        });
+</script>

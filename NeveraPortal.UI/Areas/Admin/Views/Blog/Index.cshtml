@@ -1,0 +1,53 @@
+﻿@model List<Blog>﻿
+@using NonFactors.Mvc.Grid;
+
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+@if(ViewBag.Error != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Result
+    </div>
+}
+
+@if(TempData["Message"] != null)
+{
+    <div class="alert alert-info" role="alert">
+        @TempData["Message"]
+    </div>
+}
+
+<a class="btn btn-success mb-3" href="/admin/blog/create">Create A Blog</a>
+
+<h1>Blogs</h1>
+
+
+
+<form action="/admin/blog" method="post">
+
+	@Html.AntiForgeryToken()
+	@(Html
+		.Grid(Model)
+		.Build(columns =>
+		{
+
+			columns.Add(model => model.Id).Titled("Id");
+			columns.Add(model => model.Title).Titled("Title");
+			columns.Add(model => $"<img src=\"{model.MainImgPath}\" height=\"75\">").Titled("Img Url").Encoded(false);
+			columns.Add(model => model.Content).Titled("Content").Encoded(false);
+			columns.Add(model => model.Tags).Titled("Tags");
+			columns.Add(model => model.AddDate.ToString("g")).Titled("Add Date");
+			columns.Add(model => model.UpdateDate.ToString("g")).Titled("Update Date");
+			columns.Add(model => $"<a class=\"btn btn-primary\"  href=\"/admin/blog/edit?id={model.Id}\">Update</a>").Encoded(false);
+			columns.Add(model => $"<a class=\"btn btn-danger\" href=\"/admin/blog/delete?id={model.Id}&blogTitle={model.Title}\">Delete</a>").Encoded(false);
+
+
+
+		})
+		)
+
+</form>
+
