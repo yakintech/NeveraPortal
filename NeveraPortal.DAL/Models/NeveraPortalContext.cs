@@ -13,7 +13,7 @@ namespace NeveraPortal.DAL.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer("Server=DESKTOP-EET2RGT;Database=NeveraPortalDB;Trusted_Connection=True;");
-            optionsBuilder.UseSqlServer("Server=DESKTOP-F160INQ;Database=NeveraPortalDB;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-13V6IU8;Database=NeveraPortalDB;Trusted_Connection=True;");
 
         }
 

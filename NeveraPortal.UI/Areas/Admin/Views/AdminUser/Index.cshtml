@@ -13,18 +13,15 @@
 		.Grid(Model)
 		.Build(columns =>
 		{
-			//columns.Add().RenderedAs((model, row) => row + 1).Titled("#").Css("text-center");
 
 			columns.Add(model => model.Id).Titled("Id");
 			columns.Add(model => model.EMail).Titled("EMail");
-			columns.Add(model => $"<a href=\"/admin/adminuser/edit/{model.Id}\">Update</a>").Encoded(false);
-			columns.Add(model => $"<a href=\"/admin/adminuser/delete/{model.Id}\">Delete</a>").Encoded(false);
+			columns.Add(model => $"<a class=\"btn btn-primary\"  href=\"/admin/adminuser/edit/{model.Id}\">Update</a>").Encoded(false);
+			columns.Add(model => $"<a class=\"btn btn-danger\" href=\"/admin/adminuser/delete/{model.Id}\">Delete</a>").Encoded(false);
 
 
 
 		})
 		)
-
-	<a href="/admin/adminuser/create" class="btn btn-primary">Create</a>
 
 </form>
