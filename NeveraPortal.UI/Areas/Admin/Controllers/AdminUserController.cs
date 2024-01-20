@@ -16,7 +16,16 @@ namespace NeveraPortal.UI.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            List<IndexAdminUserVM> model = new List<IndexAdminUserVM>();
+            model = _adminUserRepository.GetAll().Select(x => new IndexAdminUserVM
+            {
+                Id = x.Id,
+                EMail = x.EMail,
+                AddDate = x.AddDate,
+                UpdateDate = x.UpdateDate,
+
+            }).ToList();
+            return View(model);
         }
 
         public IActionResult Create()
@@ -68,6 +77,5 @@ namespace NeveraPortal.UI.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-       
     }
 }

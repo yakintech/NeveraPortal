@@ -1,8 +1,27 @@
-﻿
+﻿@using NonFactors.Mvc.Grid;
 @{
     Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
 }
 
+@model List<NeveraPortal.UI.Areas.Admin.Models.AdminUser.IndexAdminUserVM>
 
-ked
-<h1>Hello</h1>
+<h1>Admin List</h1>
+<form action="/admin/adminuser" method="post">
+
+@Html.AntiForgeryToken()
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        //columns.Add().RenderedAs((model, row) => row + 1).Titled("#").Css("text-center");
+        
+        columns.Add(model => model.Id).Titled("Id");
+        columns.Add(model => model.EMail).Titled("EMail");
+        columns.Add(model => $"<button data-id=\"{model.Id}\">Update</button>").Encoded(false);
+        columns.Add(model => $"<button data-id=\"{model.Id}\">Delete</button>").Encoded(false);
+
+        
+    })
+)
+
+</form>
