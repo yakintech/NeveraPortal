@@ -43,7 +43,7 @@ namespace NeveraPortal.UI.Areas.Admin.Controllers
                 adminUser.Password = model.Password;
 
                 _adminUserRepository.Create(adminUser);
-                return View();
+                return Redirect("~/admin/adminuser/");
             }
             else
             {
