@@ -6,13 +6,6 @@
     Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
 }
 
-@if(ViewBag.Error != null)
-{
-    <div class="alert alert-danger" role="alert">
-        @ViewBag.Result
-    </div>
-}
-
 @if(TempData["Message"] != null)
 {
     <div class="alert alert-info" role="alert">

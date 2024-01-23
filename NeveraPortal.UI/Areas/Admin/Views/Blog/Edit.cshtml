@@ -1,11 +1,11 @@
 ﻿@{
     Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
 }
-@model CreateBlogVM
+@model EditBlogVM
 
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
-<a class="btn btn-success mb-3" href="/admin/blog/index">Go Back to Blogs Home Page</a>
+<a class="btn btn-success mb-3" href="/admin/blog/index">Go Back to Blogs Home Hape</a>
 
 @if (ViewBag.Error != null)
 {
@@ -15,7 +15,7 @@
 }
 
 
-<form href="/Admin/Blog/Create" method="post"
+<form href="/Admin/Blog/Edit" method="post"
       enctype="multipart/form-data">
     <div class="mb-3">
         <label asp-for="Title" class="form-label"></label>
@@ -24,24 +24,30 @@
     </div>
 
     <div class="mb-3">
-        <label for="MainImage" class="form-label"></label>
+        <input asp-for="MainImgPath" hidden/>
+        <label for="MainImagePath" class="form-label">Current Image Of Blog</label><br />
+        <a href="@Model.MainImgPath" target="_blank"><img src="@Model.MainImgPath" height="150" alt="Current Image Of Blog" /></a>
+    </div>
+    
+    <div class="mb-3">
+        <label for="MainImage" class="form-label">To Change Image Select New One</label>
         <input asp-for="MainImage" class="form-control" type="file" id="formFile">
         <span asp-validation-for="MainImage" class="text-danger"></span>
     </div>
-    
+
 
     <div class="mb-3">
-    <h3>Content</h3>
-    <textarea asp-for="Content" id="editor">@Model.Content</textarea>
-    <span asp-validation-for="Content" class="text-danger"></span>
+        <h3>Content</h3>
+        <textarea asp-for="Content" id="editor"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label asp-for="Tags" class="form-label"></label>
-        <input asp-for="Tags" class="form-control">
+        <input asp-for="Tags" ><br />
         <span asp-validation-for="Tags" class="text-danger"></span>
     </div>
-    <input class="btn btn-success" type="submit" value="Add Blog">
+    <input class="btn btn-success" type="submit" value="Update Blog">
 </form>
 
 

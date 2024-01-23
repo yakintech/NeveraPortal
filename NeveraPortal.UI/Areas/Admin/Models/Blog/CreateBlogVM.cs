@@ -12,6 +12,6 @@ namespace NeveraPortal.UI.Areas.Admin.Models.AdminUser
         [Required]
         public IFormFile MainImage { get; set; }
 
-        public string Tags { get; set; } = string.Empty;
+        public string? Tags { get; set; } = string.Empty;
     }
 }
