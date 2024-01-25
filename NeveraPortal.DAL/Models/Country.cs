@@ -8,6 +8,7 @@ namespace NeveraPortal.DAL.Models
 {
     public class Country : BaseEntity
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = String.Empty;
+        public ICollection<City> Cities { get; set; }
     }
 }

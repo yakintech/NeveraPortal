@@ -1,0 +1,27 @@
+﻿@model List<City>
+@using NonFactors.Mvc.Grid;
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>City List</h1>
+
+<div class="d-flex justify-content-end">
+    <a class="btn btn-success my-2" href="/admin/city/create">Create City</a>
+</div>
+
+<form method="post" action="/admin/city">
+    @Html.AntiForgeryToken()
+
+    @(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+            columns.Add(model => model.Id).Titled("Id");
+            columns.Add(model => model.Name).Titled("City Name");
+            columns.Add(model => $"<a class=\"btn btn-primary\" href=\"/admin/city/edit/{model.Id}\">Update</a>").Encoded(false);
+            columns.Add(model => $"<a class=\"btn btn-danger\" href=\"/admin/city/delete/{model.Id}\">Delete</a>").Encoded(false);
+        })
+        )
+</form>

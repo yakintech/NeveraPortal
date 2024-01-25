@@ -1,0 +1,38 @@
+﻿@model EditCityVM
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>Edit City</h1>
+
+<hr />
+
+<form asp-controller="City" asp-action="Edit" method="post" id="editForm">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group my-3">
+        <label asp-for="CountryId"></label>
+        <select class="form-control" asp-for="CountryId" asp-items="@Model.Countries">
+            <option value="">Select Country</option>
+        </select>
+        <span asp-validation-for="CountryId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Name</label>
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <input type="hidden" asp-for="Id" />
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a asp-controller="City" asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <script>
+        // Any additional scripts if needed
+    </script>
+}

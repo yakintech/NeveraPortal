@@ -102,6 +102,7 @@ namespace NeveraPortal.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CountryId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
@@ -245,8 +246,10 @@ namespace NeveraPortal.DAL.Migrations
             modelBuilder.Entity("NeveraPortal.DAL.Models.City", b =>
                 {
                     b.HasOne("NeveraPortal.DAL.Models.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId");
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Country");
                 });
@@ -275,6 +278,11 @@ namespace NeveraPortal.DAL.Migrations
                     b.Navigation("City");
 
                     b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("NeveraPortal.DAL.Models.Country", b =>
+                {
+                    b.Navigation("Cities");
                 });
 #pragma warning restore 612, 618
         }

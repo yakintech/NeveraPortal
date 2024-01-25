@@ -1,0 +1,37 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+@model CreateCountryVM
+
+<h1>Create</h1>
+
+<hr />
+
+<form action="/admin/country/create" method="post" id="createForm">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label class="control-label">Name</label>
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="button" class="btn btn-secondary" onclick="cancel()">Cancel</button>
+</form>
+
+<script>
+    function cancel() {
+        history.back();
+    }
+</script>

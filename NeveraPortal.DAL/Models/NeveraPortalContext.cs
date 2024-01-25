@@ -13,7 +13,7 @@ namespace NeveraPortal.DAL.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer("Server=DESKTOP-EET2RGT;Database=NeveraPortalDB;Trusted_Connection=True;");
-            optionsBuilder.UseSqlServer("Server=DESKTOP-13V6IU8;Database=NeveraPortalDB;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-F160INQ;Database=NeveraPortalDB;Trusted_Connection=True;");
 
         }
 
@@ -24,5 +24,13 @@ namespace NeveraPortal.DAL.Models
         public DbSet<Job> Jobs { get; set; }
         
         public DbSet<Blog> Blogs { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<City>()
+                .HasOne(c => c.Country)
+                .WithMany(country => country.Cities)
+                .HasForeignKey(c => c.CountryId);
+        }
     }
 }

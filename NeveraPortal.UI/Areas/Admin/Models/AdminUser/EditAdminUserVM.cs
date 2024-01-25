@@ -7,9 +7,11 @@ namespace NeveraPortal.UI.Areas.Admin.Models.AdminUser
         public int Id { get; set; }
 
         [Required]
+        [EmailAddress(ErrorMessage = "Enter an email address in valid format")]
         public string EMail { get; set; } = string.Empty;
 
         [Required]
+        [StringLength(100, ErrorMessage = "The password must be at least {2} characters.", MinimumLength = 6)]
         public string Password { get; set; } = string.Empty;
 
         [Required, Compare(nameof(Password))]

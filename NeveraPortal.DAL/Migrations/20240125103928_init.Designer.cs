@@ -12,8 +12,8 @@ using NeveraPortal.DAL.Models;
 namespace NeveraPortal.DAL.Migrations
 {
     [DbContext(typeof(NeveraPortalContext))]
-    [Migration("20240119163453_JobTableCreated")]
-    partial class JobTableCreated
+    [Migration("20240125103928_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,6 +54,44 @@ namespace NeveraPortal.DAL.Migrations
                     b.ToTable("AdminUsers");
                 });
 
+            modelBuilder.Entity("NeveraPortal.DAL.Models.Blog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("AddDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MainImgPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tags")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Blogs");
+                });
+
             modelBuilder.Entity("NeveraPortal.DAL.Models.City", b =>
                 {
                     b.Property<int>("Id")
@@ -66,6 +104,7 @@ namespace NeveraPortal.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CountryId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
@@ -209,8 +248,10 @@ namespace NeveraPortal.DAL.Migrations
             modelBuilder.Entity("NeveraPortal.DAL.Models.City", b =>
                 {
                     b.HasOne("NeveraPortal.DAL.Models.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId");
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Country");
                 });
@@ -239,6 +280,11 @@ namespace NeveraPortal.DAL.Migrations
                     b.Navigation("City");
 
                     b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("NeveraPortal.DAL.Models.Country", b =>
+                {
+                    b.Navigation("Cities");
                 });
 #pragma warning restore 612, 618
         }
