@@ -5,7 +5,12 @@
 
 @model List<NeveraPortal.UI.Areas.Admin.Models.AdminUser.IndexAdminUserVM>
 
-<h1>Admin List</h1>
+<h1>AdminUser List</h1>
+
+<div class="d-flex justify-content-end">
+	<a class="btn btn-success my-2" href="/admin/adminuser/create">Create AdminUser</a>
+</div>
+
 <form action="/admin/adminuser" method="post">
 
 	@Html.AntiForgeryToken()

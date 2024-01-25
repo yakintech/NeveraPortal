@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace NeveraPortal.BLL.Services.Interfaces
 {
-	public interface ICityRepository : IGenericRepository<City>
-	{
-		void Update(City city);
+    public interface IAdminUserRepository : IGenericRepository<AdminUser>
+    {
     }
-
 }
