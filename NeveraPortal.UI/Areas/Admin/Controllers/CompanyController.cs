@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using NeveraPortal.BLL.Services.Interfaces;
 using NeveraPortal.BLL.Services.Repositories;
 using NeveraPortal.DAL.Models;
+using NeveraPortal.UI.Areas.Admin.Models.City;
 using NeveraPortal.UI.Areas.Admin.Models.Company;
 using NeveraPortal.UI.Areas.Admin.Models.Country;
 
@@ -26,13 +27,68 @@ namespace NeveraPortal.UI.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var companies = _companyRepository.GetAll();
+            //.Select(c => new IndexCompanyVM
+            //{
+            //    Name = c.Name,
+            //    Logo = c.Logo,
+            //    Address = c.Address,
+            //    CountryName = c.Country != null ? c.Country.Name : string.Empty
+            //}).ToList();
             return View(companies);
         }
 
+        public IActionResult Create()
+        {
+            var countries = _countryRepository.GetAll()
+                .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
+                .ToList();
+
+            var model = new CreateCompanyVM { Countries = countries };
+            return View(model);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult Create(CreateCompanyVM model)
+        {
+            var countries = _countryRepository.GetAll()
+                .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
+                .ToList();
+
+            model.Countries = countries;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Company company = new Company
+                    {
+                        Name = model.Name,
+                        Logo = model.Logo,
+                        Address = model.Address,
+                        CountryId = model.CountryId
+                    };
+
+                    _companyRepository.Create(company);
+
+                    return Redirect("~/admin/company/");
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(nameof(CreateCompanyVM), "Company creation failed. Please try again.");
+                    return View(model);
+                }
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             var companies = _companyRepository.GetById(id);
-            if(companies == null)
+            if (companies == null)
             {
                 return NotFound();
             }
@@ -42,11 +98,12 @@ namespace NeveraPortal.UI.Areas.Admin.Controllers
                 Logo = companies.Logo,
                 Address = companies.Address,
                 CountryId = companies.CountryId,
-                Countries = GetCountryList(),
-                Cities = GetCityList()
+                Countries = GetCountryList()
             };
             return View(model);
         }
+
+
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Edit(EditCompanyVM model)
         {
@@ -66,12 +123,11 @@ namespace NeveraPortal.UI.Areas.Admin.Controllers
 
                 _companyRepository.Update(company);
 
-                return RedirectToAction("Index","Company");
+                return RedirectToAction("Index", "Company");
             }
             else
             {
                 model.Countries = GetCountryList();
-                model.Cities = GetCityList();
                 return View(model);
             }
         }
@@ -87,26 +143,26 @@ namespace NeveraPortal.UI.Areas.Admin.Controllers
 
             return countries;
         }
-        private List<SelectListItem> GetCityList()
-        {
-            var cities = _cityRepository.GetAll()
-                .Select(city => new SelectListItem
-                {
-                    Value = city.Id.ToString(),
-                    Text = city.Name
-                })
-                .ToList();
+        //private List<SelectListItem> GetCityList()
+        //{
+        //    var cities = _cityRepository.GetAll()
+        //        .Select(city => new SelectListItem
+        //        {
+        //            Value = city.Id.ToString(),
+        //            Text = city.Name
+        //        })
+        //        .ToList();
 
-            return cities;
-        }
-		public IActionResult Delete(int id)
-		{
-			var model = _companyRepository.Delete(id);
-			if (model == null)
-			{
-				return NotFound();
-			}
+        //    return cities;
+        //}
+        public IActionResult Delete(int id)
+        {
+            var model = _companyRepository.Delete(id);
+            if (model == null)
+            {
+                return NotFound();
+            }
             return RedirectToAction("Index", "Company");
-		}
-	}
+        }
+    }
 }

@@ -1,0 +1,53 @@
+﻿@model CreateCompanyVM
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>Company Create</h1>
+
+<hr />
+
+<form action="/admin/company/create" method="post" id="createForm">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+    @Html.AntiForgeryToken()
+
+    <div class="form-group my-3">
+        <label asp-for="CountryId"></label>
+        <select class="form-control" asp-for="CountryId" asp-items="@Model.Countries">
+            <option value="">Select Country</option>
+        </select>
+        <span asp-validation-for="CountryId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Name</label>
+        @Html.TextBoxFor(n => n.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Logo</label>
+        @Html.TextBoxFor(l => l.Logo, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Address</label>
+        @Html.TextBoxFor(n => n.Address, new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="button" class="btn btn-secondary" onclick="cancel()">Cancel</button>
+</form>
+
+<script>
+    function cancel() {
+        history.back();
+    }
+</script>
