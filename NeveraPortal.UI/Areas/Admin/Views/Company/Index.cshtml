@@ -1,0 +1,33 @@
+﻿@model List<Company>
+@using NonFactors.Mvc.Grid;
+@{
+	Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="float-right">
+    <a class="btn btn-success my-2" href="/admin/company/create">Create Company</a>
+</div>
+
+<h1>Company List</h1>
+<form action="/admin/company" method="post">
+
+	@Html.AntiForgeryToken()
+	@(Html
+		.Grid(Model)
+		.Build(columns =>
+		{
+
+			columns.Add(model => model.Id).Titled("Id");
+			columns.Add(model => model.Name).Titled("Company Name");
+			columns.Add(model => model.Logo).Titled("Logo Name");
+			columns.Add(model => model.Address).Titled("Address");
+			columns.Add(model => model.Country.Name).Titled("Country");
+			columns.Add(model => model.Country.Cities).Titled("City");
+			columns.Add(model => $"<a class=\"btn btn-primary\"  href=\"/admin/company/edit/{model.Id}\">Update</a>").Encoded(false);
+			columns.Add(model => $"<a class=\"btn btn-danger\" href=\"/admin/company/delete/{model.Id}\">Delete</a>").Encoded(false);
+		})
+		)
+
+</form>
+
+

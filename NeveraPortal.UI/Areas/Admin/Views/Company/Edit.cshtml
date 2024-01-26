@@ -1,0 +1,60 @@
+﻿@model NeveraPortal.UI.Areas.Admin.Models.Company.EditCompanyVM
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+
+
+<h1>Edit Company</h1>
+
+<hr />
+
+<form method="post" asp-action="Edit" asp-controller="Company" id="createForm">
+    <input type="hidden" asp-for="Id" />
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label class="control-label">Company Name</label>
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Logo</label>
+        @Html.TextBoxFor(m => m.Logo, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label class="control-label">Address</label>
+        @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label asp-for="CountryId" class="control-label">Country</label>
+        <select asp-for="CountryId" asp-items="Model.Countries" class="form-control"></select>
+        <span asp-validation-for="CountryId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CityId" class="control-label">City</label>
+        <select asp-for="CityId" asp-items="Model.Cities" class="form-control"></select>
+        <span asp-validation-for="CityId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <button type="button" class="btn btn-secondary" onclick="cancel()">Cancel</button>
+</form>
+
+
+<script>
+    function cancel() {
+        history.back();
+    }
+</script>
+
+
