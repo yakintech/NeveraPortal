@@ -28,12 +28,12 @@ namespace NeveraPortal.UI.Areas.Admin.Controllers
         {
             var companies = _companyRepository.GetAll();
             //.Select(c => new IndexCompanyVM
-            //{
-            //    Name = c.Name,
-            //    Logo = c.Logo,
-            //    Address = c.Address,
-            //    CountryName = c.Country != null ? c.Country.Name : string.Empty
-            //}).ToList();
+            // {
+            //     Name = c.Name,
+            //     Logo = c.Logo,
+            //     Address = c.Address,
+            //     CountryName = c.Country != null ? c.Country.Name : string.Empty
+            // }).ToList();
             return View(companies);
         }
 
@@ -107,30 +107,36 @@ namespace NeveraPortal.UI.Areas.Admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Edit(EditCompanyVM model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                Company company = _companyRepository.GetById(model.Id);
-
-                if (company == null)
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
                 {
-                    return NotFound();
+                    Console.WriteLine($"ModelState Error: {error.ErrorMessage}");
                 }
 
-                company.Name = model.Name;
-                company.Logo = model.Logo;
-                company.Address = model.Address;
-                company.CountryId = model.CountryId;
-
-                _companyRepository.Update(company);
-
-                return RedirectToAction("Index", "Company");
-            }
-            else
-            {
                 model.Countries = GetCountryList();
                 return View(model);
             }
+
+            Company company = _companyRepository.GetById(model.Id);
+
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+            ModelState.Remove("CountryId");
+
+            company.Name = model.Name;
+            company.Logo = model.Logo;
+            company.Address = model.Address;
+            company.CountryId = model.CountryId;
+
+            _companyRepository.Update(company);
+
+            return RedirectToAction("Index", "Company");
         }
+
         private List<SelectListItem> GetCountryList()
         {
             var countries = _countryRepository.GetAll()

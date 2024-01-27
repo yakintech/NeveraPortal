@@ -18,6 +18,5 @@ namespace NeveraPortal.DAL.Models
         [ForeignKey("CountryId")]
         public Country Country { get; set; }
 
-
     }
 }
