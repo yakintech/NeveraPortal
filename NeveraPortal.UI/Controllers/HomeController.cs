@@ -15,6 +15,7 @@ namespace NeveraPortal.UI.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Title"] = "Home";
             return View();
         }
 

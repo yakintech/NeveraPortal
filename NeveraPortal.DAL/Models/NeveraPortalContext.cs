@@ -16,6 +16,7 @@ namespace NeveraPortal.DAL.Models
 
 
             //optionsBuilder.UseSqlServer("server=Kadir\\SQLEXPRESS;initial catalog=ApiOtelDb;integrated security=true ;TrustServerCertificate=true");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-F160INQ;Database=NeveraPortalDB;Trusted_Connection=True;");
 
         }
 
