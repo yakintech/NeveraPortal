@@ -9,5 +9,6 @@ namespace NeveraPortal.BLL.Services.Interfaces
 {
     public interface ICompanyRepository : IGenericRepository<Company>
     {
+        List<Company> GetCompanies();
     }
 }

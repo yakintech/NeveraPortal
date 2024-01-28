@@ -26,7 +26,7 @@ namespace NeveraPortal.UI.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            var companies = _companyRepository.GetAll();
+            var companies = _companyRepository.GetCompanies();
             //.Select(c => new IndexCompanyVM
             // {
             //     Name = c.Name,
@@ -94,6 +94,7 @@ namespace NeveraPortal.UI.Areas.Admin.Controllers
             }
             var model = new EditCompanyVM
             {
+                Id = companies.Id,
                 Name = companies.Name,
                 Logo = companies.Logo,
                 Address = companies.Address,
@@ -107,34 +108,38 @@ namespace NeveraPortal.UI.Areas.Admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Edit(EditCompanyVM model)
         {
-            if (!ModelState.IsValid)
-            {
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    Console.WriteLine($"ModelState Error: {error.ErrorMessage}");
-                }
 
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Company company = _companyRepository.GetById(model.Id);
+
+                    if (company == null)
+                    {
+                        return NotFound();
+                    }
+
+                    company.Name = model.Name;
+                    company.Logo = model.Logo;
+                    company.Address = model.Address;
+                    company.CountryId = model.CountryId;
+                   
+
+                    _companyRepository.Update(company);
+
+                    return RedirectToAction("Index", "Company");
+                }
+                catch (Exception ex)
+                {
+                    return View("Error");
+                }
+            }
+            else
+            {
                 model.Countries = GetCountryList();
                 return View(model);
             }
-
-            Company company = _companyRepository.GetById(model.Id);
-
-            if (company == null)
-            {
-                return NotFound();
-            }
-
-            ModelState.Remove("CountryId");
-
-            company.Name = model.Name;
-            company.Logo = model.Logo;
-            company.Address = model.Address;
-            company.CountryId = model.CountryId;
-
-            _companyRepository.Update(company);
-
-            return RedirectToAction("Index", "Company");
         }
 
         private List<SelectListItem> GetCountryList()
