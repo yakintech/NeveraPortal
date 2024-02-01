@@ -1,5 +1,4 @@
-﻿cshtml
-@model List<Category>
+﻿@model List<Category>
 
 @using NonFactors.Mvc.Grid;
 @{
@@ -8,7 +7,7 @@
 <div class="float-right">
     <a class="btn btn-success my-2" href="/admin/category/create">Create Category</a>
 </div>
-<h1>Category List</h1>
+<h1>Categories</h1>
 <form action="/admin/category" method="post">
     @Html.AntiForgeryToken()
     @(Html

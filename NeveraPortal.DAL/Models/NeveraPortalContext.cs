@@ -16,7 +16,7 @@ namespace NeveraPortal.DAL.Models
 
             //optionsBuilder.UseSqlServer("server=Kadir\\SQLEXPRESS;initial catalog=ApiOtelDb;integrated security=true ;TrustServerCertificate=true");
 
-            //optionsBuilder.UseSqlServer("Server=DESKTOP-F160INQ;Database=NeveraPortalDB;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=DESKTOP-F160INQ;Database=NeveraPortalDB;Trusted_Connection=True;");
 
         }
 
@@ -25,7 +25,7 @@ namespace NeveraPortal.DAL.Models
         public DbSet<Country> Countries { get; set;}
         public DbSet<City> Cities { get; set; }
         public DbSet<Job> Jobs { get; set; }
-
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Blog> Blogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
