@@ -1,0 +1,25 @@
+﻿cshtml
+@model List<Category>
+
+@using NonFactors.Mvc.Grid;
+@{
+    Layout = "~/Areas/Admin/Views/Shared/AdminLayout.cshtml";
+}
+<div class="float-right">
+    <a class="btn btn-success my-2" href="/admin/category/create">Create Category</a>
+</div>
+<h1>Category List</h1>
+<form action="/admin/category" method="post">
+    @Html.AntiForgeryToken()
+    @(Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+            columns.Add(model => model.Id).Titled("Id");
+            columns.Add(model => model.Name).Titled("Category Name");
+            columns.Add(model => model.Description).Titled("Description");
+            columns.Add(model => $"<a class=\"btn btn-primary\"  href=\"/admin/category/edit/{model.Id}\">Update</a>").Encoded(false);
+            columns.Add(model => $"<a class=\"btn btn-danger\" href=\"/admin/category/delete/{model.Id}\">Delete</a>").Encoded(false);
+        })
+        )
+</form>
